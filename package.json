@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "install": "^0.13.0",
+    "npm": "^6.10.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-parallax": "^2.2.0",
+    "react-scripts": "3.0.1",
+    "react-scroll": "^1.7.12",
+    "styled-components": "^4.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
