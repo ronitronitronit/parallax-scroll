@@ -45,6 +45,13 @@ const OverlayWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 80vw;
+    height: 40vh;
+  }
 `;
 
 const FlexWrapper = styled.div`

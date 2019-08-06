@@ -40,6 +40,16 @@ const Wrapper = styled.div`
   padding-bottom: 80px;
   width: 250px;
   text-align: left;
+  @media (max-width: 768px) {
+    padding: 30px;
+    & h1 {
+      font-size: 30px;
+    }
+
+    & p {
+      font-size: 12px;
+    }
+  }
 `;
 
 const Title = styled.h1`
