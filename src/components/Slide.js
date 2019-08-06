@@ -1,33 +1,54 @@
 import React from "react";
 import styled from "styled-components";
-
-const Overlay = styled.div`
-  width: 40vw;
-  height: 100vh;
-  background: rgba(10, 10, 10, 0.5);
-  z-index: 10;
-  position: absolute;
-`;
+import ReactPageScroller from "react-page-scroller";
 
 const ImageWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background: salmon;
-  z-index: 9;
-  position: relative;
+  background: ${props => props.color};
+  z-index: 0;
 `;
 
-const ContentWrapper = styled.div``;
+const Overlay = styled.div`
+  height: 100%;
+  width: 100%;
+  background: ${props => props.color};
+  opacity: 0.1;
+`;
 
-class Slide extends React.Component {
+const OverlayWrapper = styled.div`
+  z-index: 10;
+  width: 40vw;
+  position: absolute;
+  height: 90vh;
+  padding: 30px;
+`;
+
+export default class Slide extends React.Component {
+  state = {
+    page: 1
+  };
+
+  onPageChange = number => {
+    this.setState({ currentPage: number });
+  };
+
   render() {
     return (
-      <ContentWrapper>
-        <Overlay>Overlay here</Overlay>
-        <ImageWrapper>Image here</ImageWrapper>
-      </ContentWrapper>
+      <>
+        <OverlayWrapper>
+          <Overlay color={"yellow"} />
+        </OverlayWrapper>
+        <ReactPageScroller
+          ref={c => (this._pageScroller = c)}
+          pageOnChange={this.onPageChange}
+        >
+          <ImageWrapper color={"lavender"} />
+          <ImageWrapper color={"lightblue"} />
+          <ImageWrapper color={"lightpink"} />
+          <ImageWrapper color={"lightyellow"} />
+        </ReactPageScroller>
+      </>
     );
   }
 }
-
-export default Slide;
