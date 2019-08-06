@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ReactPageScroller from "react-page-scroller";
 import Images from "./Images";
+import TextBox from "./TextBox";
 
 const ImageWrapper = styled.div`
   width: 100vw;
@@ -14,7 +15,7 @@ const ImageWrapper = styled.div`
   display: inline-block;
   vertical-align: middle;
   transform: translateZ(0);
-  transition-duration: 17s;
+  transition-duration: 15s;
   transition-property: transform;
   &:hover,
   &:active {
@@ -25,7 +26,7 @@ const ImageWrapper = styled.div`
 const Overlay = styled.div`
   height: 100%;
   width: 100%;
-  opacity: 0.6;
+  opacity: 0.9;
   background: ${props => props.currentColor};
   transition: background-color 0.5s ease;
 `;
@@ -36,6 +37,9 @@ const OverlayWrapper = styled.div`
   position: fixed;
   height: 90vh;
   padding: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 `;
 
 const FlexWrapper = styled.div`
@@ -60,16 +64,6 @@ const NavigationArrow = styled.div`
   }
 `;
 
-const TextBox = styled.div`
-  position: fixed;
-  color: white;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-`;
-
 export default class Slide extends React.Component {
   state = {
     page: 1,
@@ -77,7 +71,6 @@ export default class Slide extends React.Component {
   };
 
   onPageChange = number => {
-    const previousNumber = this.state.number;
     this.setState(
       {
         currentPage: number
@@ -94,6 +87,10 @@ export default class Slide extends React.Component {
   };
 
   overlay = React.createRef();
+  page1 = React.createRef();
+  page2 = React.createRef();
+  page3 = React.createRef();
+  page4 = React.createRef();
 
   render() {
     const { currentColor, previousColor } = this.state;
@@ -101,10 +98,7 @@ export default class Slide extends React.Component {
       <>
         <FlexWrapper>
           <OverlayWrapper>
-            <TextBox>
-              <h1>BLAH</h1>
-              <p>blahoheia ohiahe eirh </p>
-            </TextBox>
+            <TextBox />
             <Overlay
               ref={this.overlay}
               currentColor={currentColor}
@@ -116,7 +110,10 @@ export default class Slide extends React.Component {
             pageOnChange={this.onPageChange}
           >
             {Images.map(item => (
-              <ImageWrapper image={Images[Images.indexOf(item)].image} />
+              <ImageWrapper
+                ref={this[`page${Images.indexOf(item)}`]}
+                image={Images[Images.indexOf(item)].image}
+              />
             ))}
           </ReactPageScroller>
           <NavigationArrowWrapper>
