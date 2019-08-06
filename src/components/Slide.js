@@ -26,12 +26,8 @@ const Overlay = styled.div`
   height: 100%;
   width: 100%;
   opacity: 0.6;
-  background: ${props => props.previousColor || "black"};
+  background: ${props => props.currentColor};
   transition: background-color 0.5s ease;
-
-  &:first-child {
-    background: ${props => props.currentColor};
-  }
 `;
 
 const OverlayWrapper = styled.div`
@@ -64,6 +60,16 @@ const NavigationArrow = styled.div`
   }
 `;
 
+const TextBox = styled.div`
+  position: fixed;
+  color: white;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+`;
+
 export default class Slide extends React.Component {
   state = {
     page: 1,
@@ -71,7 +77,7 @@ export default class Slide extends React.Component {
   };
 
   onPageChange = number => {
-    console.log(number);
+    const previousNumber = this.state.number;
     this.setState(
       {
         currentPage: number
@@ -80,8 +86,7 @@ export default class Slide extends React.Component {
         setTimeout(() => {
           this.setState({
             previousColor: this.state.currentColor,
-            currentColor: Images[number - 1].color,
-            fakeChild: false
+            currentColor: Images[number - 1].color
           });
         }, 500);
       }
@@ -96,6 +101,10 @@ export default class Slide extends React.Component {
       <>
         <FlexWrapper>
           <OverlayWrapper>
+            <TextBox>
+              <h1>BLAH</h1>
+              <p>blahoheia ohiahe eirh </p>
+            </TextBox>
             <Overlay
               ref={this.overlay}
               currentColor={currentColor}

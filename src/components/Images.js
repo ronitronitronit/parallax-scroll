@@ -6,9 +6,9 @@ import snow from "../img/snow.jpg";
 
 const Images = [
   { image: desert, color: "rgb(72,70,64)" },
-  { image: meadow, color: "rgb(26,75,53)" },
+  { image: meadow, color: "rgb(26,65,33)" },
   { image: mountain, color: "rgb(232,177,	158	)" },
-  { image: ocean, color: "rgb(100,155,121)" },
+  { image: ocean, color: "rgb(204	,193,	180	)" },
   { image: snow, color: "white" }
 ];
 
