@@ -4,6 +4,11 @@ import ReactPageScroller from "react-page-scroller";
 import Images from "./Images";
 import TextBox from "./TextBox";
 
+const direction = {
+  UP: "UP",
+  DOWN: "DOWN"
+};
+
 const ImageWrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -67,40 +72,62 @@ const NavigationArrow = styled.div`
 export default class Slide extends React.Component {
   state = {
     page: 1,
-    currentColor: Images[0].color
+    currentColor: Images[0].color,
+    currentTextColor: Images[0].text,
+    showText: true
   };
 
   onPageChange = number => {
     this.setState(
       {
-        currentPage: number
+        page: number,
+        showText: false
       },
       () => {
         setTimeout(() => {
           this.setState({
+            showText: true,
             previousColor: this.state.currentColor,
-            currentColor: Images[number - 1].color
+            previousTextColor: this.state.currentTextColor,
+            currentColor: Images[number - 1].color,
+            currentTextColor: Images[number - 1].text
           });
         }, 500);
       }
     );
   };
 
-  overlay = React.createRef();
-  page1 = React.createRef();
-  page2 = React.createRef();
-  page3 = React.createRef();
-  page4 = React.createRef();
+  navigate = selectedDirection => {
+    const { page } = this.state;
+    this._pageScroller.goToPage(
+      selectedDirection === direction.DOWN ? page : page - 2
+    );
+  };
 
   render() {
-    const { currentColor, previousColor } = this.state;
+    const {
+      page,
+      currentColor,
+      previousColor,
+      currentTextColor,
+      previousTextColor
+    } = this.state;
+
+    const currentImage = Images[page - 1];
     return (
       <>
         <FlexWrapper>
           <OverlayWrapper>
-            <TextBox />
+            {this.state.showText && (
+              <TextBox
+                title={currentImage.title}
+                subtitle={currentImage.subtitle}
+                description={currentImage.description}
+                currentTextColor={currentTextColor}
+                previousTextColor={previousTextColor}
+              />
+            )}
             <Overlay
-              ref={this.overlay}
               currentColor={currentColor}
               previousColor={previousColor}
             />
@@ -111,14 +138,18 @@ export default class Slide extends React.Component {
           >
             {Images.map(item => (
               <ImageWrapper
-                ref={this[`page${Images.indexOf(item)}`]}
+                key={item}
                 image={Images[Images.indexOf(item)].image}
               />
             ))}
           </ReactPageScroller>
           <NavigationArrowWrapper>
-            <NavigationArrow>∧</NavigationArrow>
-            <NavigationArrow>∨</NavigationArrow>
+            <NavigationArrow onClick={() => this.navigate(direction.UP)}>
+              ∧
+            </NavigationArrow>
+            <NavigationArrow onClick={() => this.navigate(direction.DOWN)}>
+              ∨
+            </NavigationArrow>
           </NavigationArrowWrapper>
         </FlexWrapper>
       </>
